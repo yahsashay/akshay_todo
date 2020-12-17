@@ -1,14 +1,30 @@
 <template>
-  <div id="app" class="container">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div class="container">
+    <div>
+      <h2>Todo List</h2>
     </div>
-    <router-view />
+    <todo-list></todo-list>
   </div>
 </template>
 
+
+
+<script>
+// @ is an alias to /src
+import TodoList from "@/components/TodoList.vue";
+
+export default {
+  name: "App",
+  components: {
+    TodoList,
+  }
+};
+</script>
+
+
 <style lang="scss">
+
+h2 { color: #111; font-family: 'Open Sans', sans-serif; font-size: 30px; font-weight: 300; line-height: 32px; margin: 0 0 72px; text-align: center; }
 
 * {
   box-sizing: border-box;

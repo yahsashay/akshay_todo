@@ -24,28 +24,20 @@
 
 <script>
 
-  
+
 export default {
   name: "todo-list",
+  mounted () {
+    const todos = JSON.parse(this.$localStorage.get('todos'))
+    if (todos) {
+        this.todos = todos
+    }
+  },
   data () {
       return {
           newTode: '',
           beforeEditCache: '',
-          idForTodo: 3,
-          todos: [
-              {
-                  'id': 1,
-                  'title': 'finish home work',
-                  'completed': false,
-                  'editing': false,
-              },
-              {
-                  'id': 2,
-                  'title': 'play Games',
-                  'completed': false,
-                  'editing': false,
-              },
-          ]
+          todos: []
       }
   },
   computed: {
@@ -69,27 +61,30 @@ export default {
               return
           }
           this.todos.push({
-              id: this.idForTodo,
+              id: this.todos.length,
               title: this.newTodo,
               completed: false,
           })
-
+          this.$localStorage.set('todos', JSON.stringify(this.todos))
           this.newTodo = ''
-          this.idForTodo++
       },
       removeTodo(index) {
           this.todos.splice(index, 1) 
+          this.$localStorage.set('todos', JSON.stringify(this.todos))
       },
       doneEdit(todo) {
           if(todo.title.trim().length == ''){
               todo.title = this.beforeEditCache
           }
           todo.editing  = false
+          this.$localStorage.set('todos', JSON.stringify(this.todos))
+          
       },
 
       editTodo(todo) {
           this.beforeEditCache = todo.title
           todo.editing =  true
+          this.$localStorage.set('todos', JSON.stringify(this.todos))
       },
       cancelEdit(todo) {
           todo.title = this.beforeEditCache
